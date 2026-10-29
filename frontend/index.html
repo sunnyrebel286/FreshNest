@@ -10,27 +10,44 @@
   <style>
     :root {
       color-scheme: light dark;
-      --nest-cream: #FAF6EF;
-      --nest-sand: #EADFCE;
-      --leaf-green: #2F6B4F;
-      --leaf-green-700: #1F4D38;
-      --mint-mist: #E3F0E8;
-      --terracotta: #C8553D;
-      --terracotta-100: #FDEEE9;
-      --ink: #1F2A24;
-      --ink-soft: #6B7A70;
+      --nest-cream: #FAF8F2;
+      --nest-sand: #E3E7E1;
+      --leaf-green: #1F5A42;
+      --leaf-green-700: #153D2E;
+      --mint-mist: #E7EFE8;
+      --terracotta: #B94F3C;
+      --terracotta-100: #FCEEEA;
+      --ink: #202722;
+      --ink-soft: #626B64;
       --sea-blue: #2B6F8F;
-      --saffron: #E3A63B;
-      --success: #2E8B57;
-      --danger: #B3372B;
-      --plum: #7A3E65;
-      --surface: #FFFEFB;
+      --saffron: #F0C46B;
+      --success: #237A4B;
+      --danger: #B42318;
+      --plum: #713B61;
+      --surface: #FFFFFF;
       --surface-raised: #FFFFFF;
-      --shadow: 0 12px 32px rgba(60, 40, 20, .09);
+      --focus-ring: #A75E00;
+      --shadow: 0 12px 32px rgba(32, 39, 34, .08);
       --shadow-drawer: -24px 0 60px rgba(25, 35, 29, .20);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 40px;
+      --space-8: 48px;
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 20px;
+      --text-xl: 30px;
+      --control-height: 46px;
+      --control-height-compact: 36px;
       --radius-input: 12px;
-      --radius-card: 22px;
-      --radius-hero: 28px;
+      --radius-card: 18px;
+      --radius-hero: 24px;
+      --transition-fast: 180ms ease-out;
       --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
       --font-body: "Plus Jakarta Sans", "Avenir Next", system-ui, sans-serif;
       --content-width: 1440px;
@@ -51,9 +68,10 @@
         --saffron: #F0C46B;
         --success: #85D6A0;
         --danger: #FF9287;
-        --plum: #D89BC2;
+        --plum: #D6A4C3;
         --surface: #192A21;
         --surface-raised: #203229;
+        --focus-ring: #F0C46B;
         --shadow: 0 12px 32px rgba(0, 0, 0, .24);
         --shadow-drawer: -24px 0 60px rgba(0, 0, 0, .45);
       }
@@ -65,12 +83,12 @@
       margin: 0;
       background: var(--nest-cream);
       color: var(--ink);
-      font: 400 16px/1.5 var(--font-body);
+      font: 400 var(--text-base)/1.5 var(--font-body);
     }
     button, input, select { font: inherit; }
     button { color: inherit; }
-    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
-      outline: 3px solid var(--saffron);
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 3px solid var(--focus-ring);
       outline-offset: 3px;
     }
     a { color: inherit; }
@@ -85,7 +103,7 @@
       white-space: nowrap;
       border: 0;
     }
-    .shell { width: min(100% - 40px, var(--content-width)); margin: 0 auto; }
+    .shell { width: min(100% - var(--space-7), var(--content-width)); margin: 0 auto; }
     .top-note {
       background: var(--leaf-green-700);
       color: var(--nest-cream);
@@ -139,7 +157,7 @@
     .pin-copy span { color: var(--ink-soft); font-size: 11px; }
     .header-actions { display: flex; align-items: center; gap: 10px; }
     .icon-button, .cart-button {
-      min-height: 44px;
+      min-height: var(--control-height);
       border: 1px solid var(--nest-sand);
       border-radius: var(--radius-input);
       background: var(--surface);
@@ -217,18 +235,18 @@
     .hero-copy > p:not(.eyebrow) { max-width: 420px; margin-bottom: 25px; color: #e6eee6; font-size: 16px; }
     .hero-art { align-self: center; justify-self: center; width: min(100%, 380px); animation: rise-in .7s .08s ease-out both; }
     .button {
-      min-height: 46px;
+      min-height: var(--control-height);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      padding: 0 18px;
+      gap: var(--space-2);
+      padding: 0 var(--space-4);
       border: 1px solid transparent;
       border-radius: var(--radius-input);
       font-weight: 750;
       text-decoration: none;
       cursor: pointer;
-      transition: background-color .18s ease-out, transform .18s ease-out, border-color .18s ease-out;
+      transition: background-color var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
     }
     .button:hover { transform: translateY(-1px); }
     .button:disabled { opacity: .48; cursor: not-allowed; transform: none; }
@@ -238,7 +256,7 @@
     .button-secondary { border-color: var(--nest-sand); background: var(--surface); }
     .button-ghost { background: transparent; color: var(--leaf-green); }
     .button-danger { background: var(--danger); color: #fff; }
-    .button-small { min-height: 36px; padding: 0 12px; font-size: 13px; }
+    .button-small { min-height: var(--control-height-compact); padding: 0 var(--space-3); font-size: 13px; }
     .button svg { width: 17px; height: 17px; }
     .promise-row { display: flex; flex-wrap: wrap; gap: 22px; margin: 18px 0 0; color: #f0f3ed; font-size: 12px; }
     .promise-row span { display: inline-flex; align-items: center; gap: 7px; }
@@ -253,9 +271,9 @@
     .search-wrap { position: relative; flex: 1; }
     .search-wrap svg { position: absolute; top: 50%; left: 14px; width: 18px; transform: translateY(-50%); color: var(--ink-soft); pointer-events: none; }
     .field, .select-field {
-      min-height: 46px;
+      min-height: var(--control-height);
       width: 100%;
-      padding: 0 13px;
+      padding: 0 var(--space-3);
       border: 1px solid var(--nest-sand);
       border-radius: var(--radius-input);
       color: var(--ink);
@@ -265,8 +283,8 @@
     .select-field { width: auto; min-width: 165px; cursor: pointer; }
     .category-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
     .chip {
-      min-height: 36px;
-      padding: 0 14px;
+      min-height: var(--control-height-compact);
+      padding: 0 var(--space-4);
       border: 1px solid var(--nest-sand);
       border-radius: 999px;
       background: var(--surface);
@@ -281,7 +299,7 @@
       min-width: 0;
       overflow: hidden;
       border: 1px solid var(--nest-sand);
-      border-radius: 16px 22px 22px 22px;
+      border-radius: var(--radius-card);
       background: var(--surface);
       box-shadow: 0 4px 16px rgba(60,40,20,.035);
       animation: rise-in .4s ease-out both;
