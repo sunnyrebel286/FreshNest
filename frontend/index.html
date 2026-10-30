@@ -541,6 +541,48 @@
     .toast { padding: 13px 16px; border: 1px solid var(--nest-sand); border-left: 4px solid var(--leaf-green); border-radius: 12px; background: var(--surface-raised); box-shadow: var(--shadow); font-size: 13px; animation: rise-in .2s ease-out both; }
     .toast.is-error { border-left-color: var(--danger); }
     .mobile-nav, .mobile-cart-bar { display: none; }
+    .product-photo { position: absolute; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .product-visual:hover .product-photo { transform: scale(1.06); }
+    .product-visual.is-loading::after { content: ""; position: absolute; z-index: 2; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.55) 48%, transparent 66%), var(--mint-mist); background-size: 220% 100%; animation: shimmer 1.2s linear infinite; }
+    .product-label { top: auto; right: 10px; bottom: 40px; left: auto; }
+    .freshness { right: auto; top: 10px; bottom: auto; left: 10px; max-width: calc(100% - 20px); padding: 4px 7px; font-size: 9px; line-height: 1.25; white-space: normal; }
+    .freshness-clock { animation: pulse 1.8s ease-in-out infinite; }
+    .product-title { cursor: pointer; }
+    .product-facts { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 9px; }
+    .product-facts span, .macro-pill { padding: 4px 7px; border-radius: 999px; background: var(--mint-mist); color: var(--leaf-green-700); font-size: 10px; font-weight: 750; }
+    .product-actions { display: flex; align-items: center; gap: 7px; }
+    .card-stepper { display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 5px; border: 1px solid var(--nest-sand); border-radius: 11px; }
+    .card-stepper button { width: 28px; height: 28px; border: 0; border-radius: 8px; background: var(--mint-mist); color: var(--leaf-green-700); font-weight: 850; cursor: pointer; }
+    .card-stepper output { min-width: 12px; text-align: center; font-size: 12px; font-weight: 800; }
+    .card-add { width: auto; min-width: 39px; padding: 0 10px; display: inline-flex; gap: 5px; white-space: nowrap; font-size: 11px; font-weight: 750; }
+    .summary-progress { margin: 13px 0; padding: 12px; border-radius: 12px; background: var(--mint-mist); color: var(--leaf-green-700); font-size: 11px; }
+    .summary-progress .progress-track { margin-top: 8px; }
+    .summary-savings { margin: 8px 0; color: var(--success); font-size: 12px; font-weight: 750; }
+    .detail-gallery { margin-bottom: 17px; }
+    .detail-gallery-main { width: 100%; height: 230px; display: block; object-fit: cover; border-radius: 16px; background: var(--mint-mist); }
+    .detail-thumbnails { display: flex; gap: 8px; margin-top: 8px; }
+    .detail-thumbnail { width: 72px; height: 58px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 10px; background: var(--mint-mist); cursor: pointer; }
+    .detail-thumbnail[aria-pressed="true"] { border-color: var(--leaf-green); }
+    .detail-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+    .info-card { margin: 12px 0; padding: 14px; border: 1px solid var(--nest-sand); border-radius: 14px; background: var(--surface-raised); }
+    .info-card h3 { margin: 0 0 9px; font: 750 14px/1.3 var(--font-body); }
+    .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .info-grid span { display: block; color: var(--ink-soft); font-size: 10px; }
+    .info-grid strong { font-size: 12px; }
+    .macro-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .cooking-steps { margin: 8px 0 0; padding-left: 19px; color: var(--ink-soft); font-size: 12px; }
+    .detail-cut { margin: 9px 0; }
+    .detail-price { font-size: 20px; font-weight: 850; }
+    .pin-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0 14px; }
+    .pin-chip { min-height: 32px; padding: 0 10px; border: 1px solid var(--nest-sand); border-radius: 999px; background: var(--surface); color: var(--leaf-green-700); font-size: 11px; font-weight: 750; cursor: pointer; }
+    .delivery-card { display: none; margin: 13px 0; padding: 14px; border: 1px solid var(--nest-sand); border-radius: 14px; background: var(--mint-mist); }
+    .delivery-card.is-visible { display: block; }
+    .delivery-card h3 { margin: 0 0 7px; font: 750 14px var(--font-body); }
+    .delivery-card p { margin: 4px 0; font-size: 12px; }
+    .delivery-slot { margin-top: 10px; }
+    .journey-temp { display: flex; justify-content: space-between; gap: 10px; padding: 12px; border-radius: 12px; background: var(--mint-mist); font-size: 12px; }
+    .clear-cart { margin: 10px 0 0; padding: 0; border: 0; color: var(--danger); background: transparent; font-size: 12px; cursor: pointer; }
+    @keyframes shimmer { to { background-position: -220% 0; } }
     @keyframes rise-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
@@ -637,9 +679,9 @@
       .hero h1 { font-size: 34px; }
       .hero-art { width: 108px; }
       .promise-row { display: grid; gap: 5px; }
-      .freshness { right: 5px; bottom: 5px; gap: 4px; padding: 4px 6px; font-size: 9px; }
+      .freshness { top: 5px; right: auto; bottom: auto; left: 5px; max-width: calc(100% - 10px); gap: 4px; padding: 4px 6px; font-size: 9px; }
       .freshness-clock { width: 11px; height: 11px; }
-      .product-label { top: 6px; left: 6px; padding: 3px 6px; font-size: 9px; }
+      .product-label { top: auto; right: 6px; bottom: 35px; left: auto; padding: 3px 6px; font-size: 9px; }
       .product-kicker { align-items: start; }
       .rating span { display: none; }
       .dialog-content { padding: 24px 20px; }
@@ -665,21 +707,15 @@
         <button class="icon-button" id="search-focus" type="button" aria-label="Focus product search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button>
         <button class="cart-button" id="open-cart" type="button" aria-label="Open cart, 0 items">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
-          <span class="cart-button-label">Basket</span><span class="cart-count" id="cart-count">0</span>
+          <span class="cart-button-label" id="header-cart-summary">0 items · ₹0</span><span class="cart-count" id="cart-count">0</span>
         </button>
       </div>
     </div>
     <nav class="shell category-nav" aria-label="Main categories">
       <button type="button" data-category="All" aria-current="true">Shop all</button>
-      <button type="button" data-category="Chicken">Chicken</button>
-      <button type="button" data-category="Mutton">Mutton</button>
-      <button type="button" data-category="Fish">Fish</button>
-      <button type="button" data-category="Prawns">Prawns</button>
-      <button type="button" data-category="Ready To Cook">Ready to cook</button>
-      <button type="button" data-category="Marinades">Marinades</button>
-      <button type="button" data-category="Ready To Eat">Ready to eat</button>
-      <button type="button" data-category="Cold Cuts">Cold cuts</button>
-      <button type="button" data-category="Combos">Combos</button>
+      <button type="button" data-category="Fresh Cuts">Fresh Cuts</button>
+      <button type="button" data-category="Seafood">Seafood</button>
+      <button type="button" data-category="Easy-to-Cook">Easy-to-Cook</button>
     </nav>
   </header>
 
@@ -714,20 +750,14 @@
           <span class="result-count" id="result-count" aria-live="polite">12 fresh picks</span>
         </div>
         <div class="shop-tools">
-          <label class="search-wrap"><span class="sr-only">Search products</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input class="field" id="product-search" type="search" placeholder="Search chicken, fish, marinades..." autocomplete="off"></label>
-          <label><span class="sr-only">Sort products</span><select class="select-field" id="product-sort"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="rating">Top rated</option></select></label>
+          <label class="search-wrap"><span class="sr-only">Search products</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input class="field" id="product-search" type="search" placeholder="Search cuts, seafood or ingredients..." autocomplete="off"></label>
+          <label><span class="sr-only">Sort products</span><select class="select-field" id="product-sort"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="protein">Highest protein</option></select></label>
         </div>
         <div class="category-chips" id="category-chips" aria-label="Filter by category">
-          <button class="chip" type="button" data-category="All" aria-pressed="true">All</button>
-          <button class="chip" type="button" data-category="Chicken" aria-pressed="false">Chicken</button>
-          <button class="chip" type="button" data-category="Mutton" aria-pressed="false">Mutton</button>
-          <button class="chip" type="button" data-category="Fish" aria-pressed="false">Fish</button>
-          <button class="chip" type="button" data-category="Prawns" aria-pressed="false">Prawns</button>
-          <button class="chip" type="button" data-category="Ready To Cook" aria-pressed="false">Ready to cook</button>
-          <button class="chip" type="button" data-category="Marinades" aria-pressed="false">Marinades</button>
-          <button class="chip" type="button" data-category="Ready To Eat" aria-pressed="false">Ready to eat</button>
-          <button class="chip" type="button" data-category="Cold Cuts" aria-pressed="false">Cold cuts</button>
-          <button class="chip" type="button" data-category="Combos" aria-pressed="false">Combos</button>
+          <button class="chip" type="button" data-category="All" aria-pressed="true">All (12)</button>
+          <button class="chip" type="button" data-category="Fresh Cuts" aria-pressed="false">Fresh Cuts (4)</button>
+          <button class="chip" type="button" data-category="Seafood" aria-pressed="false">Seafood (4)</button>
+          <button class="chip" type="button" data-category="Easy-to-Cook" aria-pressed="false">Easy-to-Cook (4)</button>
         </div>
         <div class="product-grid" id="product-grid" aria-live="polite"></div>
       </section>
@@ -736,10 +766,15 @@
         <h2 style="font-size:25px;margin-bottom:8px">Your basket</h2>
         <p style="color:var(--ink-soft);font-size:13px">Build a basket and we'll show your demo total here.</p>
         <div class="aside-line"><span>Items</span><strong id="aside-items">0</strong></div>
-        <div class="aside-line"><span>Subtotal</span><strong id="aside-subtotal">₹0</strong></div>
+        <div class="aside-line"><span>Item subtotal</span><strong id="aside-subtotal">₹0</strong></div>
+        <div class="aside-line"><span>Eco-chilled packaging</span><strong id="aside-packaging">₹19</strong></div>
+        <div class="aside-line"><span>Cold-chain delivery</span><strong id="aside-delivery">₹39</strong></div>
+        <div class="aside-line"><span>Total savings</span><strong id="aside-savings">₹0</strong></div>
+        <div class="summary-progress"><span id="aside-progress-copy">Add ₹499 of fresh picks for free delivery.</span><div class="progress-track"><div class="progress-fill" id="aside-progress-fill"></div></div></div>
         <div class="aside-line aside-total"><span>Estimated total</span><strong id="aside-total">₹0</strong></div>
-        <div class="aside-note" id="aside-note">Add ₹499 of fresh picks for free delivery.</div>
+        <div class="aside-note" id="aside-note">Eco-chilled packaging ₹19 · Delivery ₹39.</div>
         <button class="button button-primary" id="aside-open-cart" type="button" style="width:100%">Open basket</button>
+        <button class="button button-ghost" id="open-tracking" type="button" style="width:100%;margin-top:5px">Your order journey</button>
       </aside>
     </div>
   </main>
@@ -761,7 +796,7 @@
     <button type="button" data-scroll="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/><circle cx="8" cy="5" r="2" fill="var(--surface)"/><circle cx="15" cy="12" r="2" fill="var(--surface)"/></svg>Categories</button>
     <button type="button" id="mobile-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>Search</button>
     <button type="button" id="mobile-cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>Cart</button>
-    <button type="button" id="mobile-account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.7-4 3.4-6 8-6s7.3 2 8 6"/></svg>Account</button>
+    <button type="button" id="mobile-tracking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 18V6m0 12h16M8 15l3-4 3 2 5-7"/></svg>Journey</button>
   </nav>
 
   <div class="overlay" id="pincode-overlay" role="presentation">
@@ -778,6 +813,14 @@
           <button class="button button-primary" type="submit">Check</button>
         </form>
         <span class="field-hint" id="pincode-message" aria-live="polite">Demo areas: 110001, 400001, 560001, 600001, 700001</span>
+        <div class="pin-chips" aria-label="Try a demo delivery area">
+          <button class="pin-chip" type="button" data-pincode="110001">New Delhi · 110001</button>
+          <button class="pin-chip" type="button" data-pincode="400001">Mumbai · 400001</button>
+          <button class="pin-chip" type="button" data-pincode="560001">Bengaluru · 560001</button>
+          <button class="pin-chip" type="button" data-pincode="600001">Chennai · 600001</button>
+          <button class="pin-chip" type="button" data-pincode="700001">Kolkata · 700001</button>
+        </div>
+        <section class="delivery-card" id="delivery-card" aria-live="polite"></section>
         <form class="notify-form" id="notify-form">
           <label for="notify-email" style="display:block;margin-bottom:7px;font-size:12px;font-weight:750">Get a note when FreshNest reaches you</label>
           <div class="inline-form"><input class="field" id="notify-email" type="email" placeholder="Email address" required><button class="button button-secondary" type="submit">Notify me</button></div>
@@ -812,105 +855,190 @@
 
   <script>
     (() => {
-      const products = [
-        { id: 1, name: "Classic Chicken Curry Cut", category: "Chicken", emoji: "🍗", accent: "#E3A63B", description: "A balanced mix, ready for your favourite curry.", pricePerKg: 399, oldPricePerKg: 449, freshness: 3, rating: 4.8, cutStyles: ["Curry cut", "Biryani cut", "Boneless"], featured: 1 },
-        { id: 2, name: "Tender Chicken Breast", category: "Chicken", emoji: "🍗", accent: "#E3A63B", description: "Lean, tender pieces for quick everyday meals.", pricePerKg: 459, oldPricePerKg: 499, freshness: 2, rating: 4.7, cutStyles: ["Boneless", "Curry cut"], featured: 2 },
-        { id: 3, name: "Goat Curry Cut", category: "Mutton", emoji: "🥩", accent: "#C8553D", description: "Carefully trimmed, with bone for a richer broth.", pricePerKg: 899, oldPricePerKg: 949, freshness: 4, rating: 4.9, cutStyles: ["Curry cut", "Biryani cut", "Keema"], featured: 3 },
-        { id: 4, name: "Coastal Seer Fish", category: "Fish", emoji: "🐟", accent: "#2B6F8F", description: "Firm, meaty steaks for a bright coastal curry.", pricePerKg: 799, oldPricePerKg: 849, freshness: 2, rating: 4.8, cutStyles: ["Curry cut", "Biryani cut"], featured: 4 },
-        { id: 5, name: "Cleaned White Prawns", category: "Prawns", emoji: "🍤", accent: "#2B6F8F", description: "Peeled and deveined, ready for the pan.", pricePerKg: 699, oldPricePerKg: 749, freshness: 3, rating: 4.6, cutStyles: ["Curry cut", "Whole"], featured: 5 },
-        { id: 6, name: "Smoky Tandoori Chicken", category: "Ready To Cook", emoji: "🍢", accent: "#2F6B4F", description: "Yoghurt, warming spices and a little smoke.", pricePerKg: 549, oldPricePerKg: 599, freshness: 5, rating: 4.7, cutStyles: ["Boneless", "Curry cut"], featured: 6 },
-        { id: 7, name: "Green Herb Marinade", category: "Marinades", emoji: "🌿", accent: "#2F6B4F", description: "A fresh, fragrant marinade for easy suppers.", pricePerKg: 249, oldPricePerKg: 279, freshness: 6, rating: 4.5, cutStyles: ["Whole"], featured: 7 },
-        { id: 8, name: "Pepper Chicken Roast", category: "Ready To Eat", emoji: "🍲", accent: "#C8553D", description: "Slow-cooked flavour, ready to warm and serve.", pricePerKg: 499, oldPricePerKg: 549, freshness: 3, rating: 4.6, cutStyles: ["Boneless"], featured: 8 },
-        { id: 9, name: "Herb Chicken Sausages", category: "Cold Cuts", emoji: "🌭", accent: "#C8553D", description: "Mildly seasoned sausages for a quick breakfast.", pricePerKg: 429, oldPricePerKg: 479, freshness: 4, rating: 4.4, cutStyles: ["Whole"], featured: 9 },
-        { id: 10, name: "Weeknight Grill Combo", category: "Combos", emoji: "🍱", accent: "#7A3E65", description: "A little variety for an easy weekend grill.", pricePerKg: 649, oldPricePerKg: 729, freshness: 2, rating: 4.8, cutStyles: ["Boneless", "Curry cut"], featured: 10 },
-        { id: 11, name: "Classic Chicken Keema", category: "Chicken", emoji: "🍛", accent: "#E3A63B", description: "Finely minced and ready for keema or kebabs.", pricePerKg: 449, oldPricePerKg: 499, freshness: 3, rating: 4.7, cutStyles: ["Keema", "Boneless"], featured: 11 },
-        { id: 12, name: "Citrus Fish Curry Kit", category: "Ready To Cook", emoji: "🍋", accent: "#2B6F8F", description: "Bright citrus, balanced spices and coastal comfort.", pricePerKg: 599, oldPricePerKg: 649, freshness: 4, rating: 4.6, cutStyles: ["Curry cut"], featured: 12 }
+      const photo = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=960&q=85`;
+      const productRows = [
+        ["farm-chicken-curry", "Farm Fresh Chicken Curry Cut", "Fresh Cuts", "Bone-in pieces for a deeply comforting curry.", 249, 299, "500g", "550g", "12-16 pcs", "3-4", "Certified Local Farms", "24g", "6.5g", "165 kcal", "Pressure cook", "Standard Curry Cut|0;Large Biryani Cut|15;Skinless Trim|20", "photo-1604503468506-a8da13d82791", "photo-1604908176997-125f25cc6f3d", "photo-1600891964599-f61ba0e24092", "🍗"],
+        ["chicken-breast", "Tender Chicken Breast Boneless Fillets", "Fresh Cuts", "Lean, tender fillets for quick everyday meals.", 279, 329, "450g", "500g", "3-4 fillets", "2-3", "Certified Local Farms", "31g", "3.6g", "165 kcal", "Pan sear", "Whole Fillets|0;Butterfly Cut|15;Diced Cubes|20", "photo-1604503468506-a8da13d82791", "photo-1604908176997-125f25cc6f3d", "photo-1547592180-85f173990554", "🍗"],
+        ["goat-curry", "Rich Goat Curry Cut - Shoulder & Ribs", "Fresh Cuts", "Shoulder and ribs, trimmed for a rich slow-cooked gravy.", 689, 759, "500g", "560g", "10-14 pcs", "3-4", "Certified Local Farms", "25g", "21g", "294 kcal", "Pressure cook", "Standard Curry Cut|0;Large Biryani Cut|25;Boneless Cubes|45", "photo-1607623814075-e51df1bdc82f", "photo-1604908176997-125f25cc6f3d", "photo-1547592180-85f173990554", "🥩"],
+        ["lamb-keema", "Artisanal Lamb Mince / Double-Ground Keema", "Fresh Cuts", "Fine double-ground mince for kebabs, keema and more.", 549, 619, "400g", "420g", "Fine mince", "3-4", "Certified Local Farms", "25g", "20g", "283 kcal", "Pan cook", "Fine Mince|0;Coarse Mince|15;Kebab Mix|25", "photo-1607623814075-e51df1bdc82f", "photo-1604908176997-125f25cc6f3d", "photo-1547592180-85f173990554", "🥩"],
+        ["atlantic-salmon", "Norwegian Atlantic Salmon Fillet", "Seafood", "Silky, rich fillets with naturally buttery flavour.", 649, 729, "250g", "280g", "2 fillets", "1-2", "Norwegian Coastal Catch", "20g", "13g", "208 kcal", "Pan sear", "Skin-on Fillets|0;Skinless Fillets|20;Diced Cubes|25", "photo-1519708227418-c8fd9a32b7a2", "photo-1565680018434-b513d5e5fd47", "photo-1519708227418-c8fd9a32b7a2", "🐟"],
+        ["tiger-prawns", "Fresh Tiger Prawns - Cleaned & Deveined", "Seafood", "Sweet, meaty prawns, cleaned and deveined for ease.", 429, 489, "300g", "500g", "20-25 pcs", "2-3", "Coastal Catch", "20g", "1.7g", "99 kcal", "Pan sear", "Cleaned & Deveined|0;Butterfly Cut|15;Tail-on|10", "photo-1565680018434-b513d5e5fd47", "photo-1565680018434-b513d5e5fd47", "photo-1559847844-5315695dadae", "🍤"],
+        ["surmai-steaks", "Coastal Surmai / Kingfish Steaks", "Seafood", "Firm coastal steaks made for a bright, tangy fry.", 529, 599, "350g", "420g", "3-4 steaks", "2-3", "Western Coastal Catch", "21g", "4g", "125 kcal", "Pan fry", "Curry Steaks|0;Thick Steaks|20;Boneless Portions|30", "photo-1519708227418-c8fd9a32b7a2", "photo-1565680018434-b513d5e5fd47", "photo-1559847844-5315695dadae", "🐟"],
+        ["rohu-bengal", "Freshwater Rohu Bengal Cut", "Seafood", "Freshwater favourite, cut Bengali-style for home cooking.", 269, 309, "500g", "580g", "6-8 pcs", "3-4", "Eastern River Farms", "17g", "6g", "127 kcal", "Pan fry", "Bengal Curry Cut|0;Thick Steaks|15;Headless Cut|20", "photo-1519708227418-c8fd9a32b7a2", "photo-1565680018434-b513d5e5fd47", "photo-1559847844-5315695dadae", "🐟"],
+        ["herb-chicken-tikka", "Classic Herb-Crusted Chicken Tikka", "Easy-to-Cook", "Herb-marinated, tender tikka ready in just 12 minutes.", 289, 329, "400g", "420g", "8-10 pcs", "2-3", "Certified Local Farms", "27g", "8g", "190 kcal", "Air fry", "Tikka Pieces|0;Skewer Cut|10;Boneless Cubes|15", "photo-1604503468506-a8da13d82791", "photo-1604908176997-125f25cc6f3d", "photo-1600891964599-f61ba0e24092", "🍢"],
+        ["peri-peri-wings", "Smoky Peri-Peri Chicken Wings", "Easy-to-Cook", "Smoky, tangy wings tossed in a lively peri-peri marinade.", 299, 349, "450g", "470g", "8-10 winglets", "2-3", "Certified Local Farms", "24g", "12g", "220 kcal", "Air fry", "Whole Winglets|0;Split Wings|10;Drumettes Only|15", "photo-1604503468506-a8da13d82791", "photo-1604908176997-125f25cc6f3d", "photo-1600891964599-f61ba0e24092", "🍗"],
+        ["garlic-herb-prawns", "Garlic & Herb Butter Prawns Skillet Pack", "Easy-to-Cook", "A buttery garlic-herb skillet, ready in only 6 minutes.", 449, 509, "250g", "270g", "15-18 pcs", "1-2", "Coastal Catch", "20g", "8g", "160 kcal", "Skillet", "Skillet Ready|0;Butterfly Cut|15;Tail-on|10", "photo-1565680018434-b513d5e5fd47", "photo-1565680018434-b513d5e5fd47", "photo-1559847844-5315695dadae", "🍤"],
+        ["bhetki-fingers", "Crispy Bhetki Fish Fingers with Tartar Dip", "Easy-to-Cook", "Golden, crisp fish fingers with a cool tartar dip.", 389, 439, "300g", "320g", "8 fingers", "2", "Eastern Coastal Catch", "18g", "7g", "170 kcal", "Air fry", "Fish Fingers|0;Bite-size Pieces|10;Larger Fingers|15", "photo-1519708227418-c8fd9a32b7a2", "photo-1565680018434-b513d5e5fd47", "photo-1559847844-5315695dadae", "🐟"]
       ];
-      const categories = ["All", "Chicken", "Mutton", "Fish", "Prawns", "Ready To Cook", "Marinades", "Ready To Eat", "Cold Cuts", "Combos"];
+      const ingredientsById = {
+        "farm-chicken-curry": "chicken bone-in curry",
+        "chicken-breast": "chicken breast boneless fillet",
+        "goat-curry": "goat mutton shoulder ribs",
+        "lamb-keema": "lamb mince keema",
+        "atlantic-salmon": "salmon fish",
+        "tiger-prawns": "prawn shrimp",
+        "surmai-steaks": "surmai kingfish",
+        "rohu-bengal": "rohu freshwater fish",
+        "herb-chicken-tikka": "chicken herb tikka marinade",
+        "peri-peri-wings": "chicken wings peri-peri pepper",
+        "garlic-herb-prawns": "prawns garlic butter herbs",
+        "bhetki-fingers": "bhetki fish tartar"
+      };
+      const products = productRows.map((row, index) => {
+        const [id, name, category, tagline, basePrice, mrp, net, gross, pieces, serves, sourcedFrom, protein, fat, calories, method, cuts, raw, packed, cooked, emoji] = row;
+        const cutOptions = cuts.split(";").map((cut) => {
+          const [label, priceMod] = cut.split("|");
+          return { label, priceMod: Number(priceMod) };
+        });
+        const images = [raw, packed, cooked].map(photo);
+        return {
+          id, name, category, tagline, basePrice, mrp,
+          ingredients: ingredientsById[id],
+          discountPercent: Math.round((mrp - basePrice) / mrp * 100),
+          weights: { net, gross, pieces, serves },
+          freshness: { clockText: `Chilled at 2°C · Cut ${index % 4 + 1} hrs ago`, temp: "0°C - 4°C", batchId: `FN-BATCH-${884 + index}`, shelfLife: category === "Easy-to-Cook" ? "24 Hours" : "36 Hours", sourcedFrom },
+          images, cutOptions, macros: { protein, fat, calories },
+          cookingGuide: {
+            prepTime: category === "Easy-to-Cook" ? "2 mins" : "10 mins",
+            cookTime: category === "Easy-to-Cook" ? (name.includes("Tikka") ? "12 mins" : name.includes("Wings") ? "15 mins" : name.includes("Prawns") ? "6 mins" : "8 mins") : "20-30 mins",
+            method, chefTip: "Bring chilled ingredients close to room temperature before cooking for an even finish.",
+            steps: ["Season with salt, aromatics and your favourite spices.", `Cook using ${method.toLowerCase()} until thoroughly cooked and piping hot.`, "Rest briefly, finish with fresh herbs or lemon, and serve."]
+          },
+          emoji, rating: 4.8, featured: index + 1
+        };
+      });
       const slots = [
-        { id: "express", label: "Express", detail: "45 min", capacity: 3, express: true },
-        { id: "today", label: "Today", detail: "6–8 PM", capacity: 5 },
-        { id: "tomorrow-am", label: "Tomorrow", detail: "7–9 AM", capacity: 0 },
-        { id: "tomorrow-pm", label: "Tomorrow", detail: "6–8 PM", capacity: 4 }
+        { id: "express", label: "Express", detail: "45-Min Delivery", express: true },
+        { id: "today", label: "Today Evening", detail: "5 PM - 7 PM" },
+        { id: "tomorrow", label: "Tomorrow Morning", detail: "7 AM - 9 AM" }
       ];
-      const pincodeList = ["110001", "400001", "560001", "600001", "700001"];
-      const orderStatuses = ["CONFIRMED", "PROCESSING", "PACKING", "PACKED", "OUT_FOR_DELIVERY", "DELIVERED"];
-      const statusLabels = ["Confirmed", "Processing", "Packing", "Packed", "On the way", "Delivered"];
-      const statusTimes = ["Just now", "A little later", "Underway", "Being prepared", "On the way", "At your door"];
-      const state = { category: "All", search: "", sort: "featured", cart: [], coupon: null, couponCode: "", couponMessage: "", couponMessageTone: "", slot: "today", pincode: "", serviceable: false, order: null, activeOverlay: null, lastFocus: null, activeDetailId: null };
+      const deliveryAreas = {
+        "110001": { area: "Connaught Place", city: "New Delhi", hub: "Central Delhi Cold Hub", eta: 45 },
+        "400001": { area: "Fort / Colaba", city: "Mumbai", hub: "South Mumbai Coastal Hub", eta: 40 },
+        "560001": { area: "MG Road / Indiranagar", city: "Bengaluru", hub: "Koramangala Chiller Hub", eta: 35 },
+        "600001": { area: "George Town / Anna Salai", city: "Chennai", hub: "Marina Cold-Chain Hub", eta: 45 },
+        "700001": { area: "BBD Bagh / Park Street", city: "Kolkata", hub: "Metro Cold Storage Hub", eta: 50 }
+      };
+      const orderStatuses = ["Order Confirmed", "Custom Cutting in Progress", "Vacuum Packed & Quality Checked", "Out for Chilled Delivery", "Delivered Fresh"];
+      const statusDescriptions = ["Sent to your local FreshNest counter.", "Your chosen cuts are being prepared by the master butcher.", "Metal-detected, quality checked, and vacuum sealed at 2°C.", "Rider assigned with an insulated ice-gel box.", "Freshness is at your doorstep. Enjoy your meal!"];
+      const storageKeys = { cart: "freshnest-cart", location: "freshnest-location" };
+      const state = { category: "All", search: "", sort: "featured", cart: [], slot: "express", pincode: "", serviceable: false, order: null, activeOverlay: null, lastFocus: null, activeDetailId: null, detailImage: 0, autoplay: null };
       const byId = (id) => document.getElementById(id);
       const rupees = (amount) => `₹${Math.max(0, amount).toFixed(2).replace(/\.00$/, "")}`;
-      const productById = (id) => products.find((product) => product.id === Number(id));
+      const productById = (id) => products.find((product) => product.id === String(id));
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
 
-      function subtotal() {
-        return state.cart.reduce((total, item) => total + item.product.pricePerKg * item.weight * item.quantity, 0);
-      }
-      function discountAmount() {
-        if (!state.coupon) return 0;
-        if (state.coupon.type === "percent") return Math.min(150, subtotal() * .1);
-        if (state.coupon.type === "fixed") return Math.min(50, subtotal());
-        return 0;
-      }
+      function currentPrice(product, cutIndex = 0) { return product.basePrice + product.cutOptions[cutIndex].priceMod; }
+      function cartItemPrice(item) { return currentPrice(productById(item.productId), item.cutIndex) * item.quantity; }
+      function subtotal() { return state.cart.reduce((total, item) => total + cartItemPrice(item), 0); }
+      function savings() { return state.cart.reduce((total, item) => total + (productById(item.productId).mrp - currentPrice(productById(item.productId), item.cutIndex)) * item.quantity, 0); }
       function priceSummary() {
         const sub = subtotal();
-        const discount = discountAmount();
-        const delivery = sub >= 499 || state.coupon?.type === "delivery" ? 0 : (state.cart.length ? 49 : 0);
-        const tax = Math.max(0, sub - discount) * .05;
-        const fee = state.cart.length ? 5 : 0;
-        return { sub, discount, tax, delivery, fee, total: Math.max(0, sub - discount + tax + delivery + fee) };
+        const freeDelivery = sub >= 499;
+        const packaging = state.cart.length && !freeDelivery ? 19 : 0;
+        const delivery = state.cart.length && !freeDelivery ? 39 : 0;
+        return { sub, savings: savings(), packaging, delivery, total: sub + packaging + delivery, freeDelivery };
       }
       function countItems() { return state.cart.reduce((count, item) => count + item.quantity, 0); }
+      function cartQuantity(productId, cutIndex) {
+        return state.cart.find((item) => item.productId === productId && item.cutIndex === cutIndex)?.quantity || 0;
+      }
+      function persistCart() {
+        try {
+          localStorage.setItem(storageKeys.cart, JSON.stringify(state.cart));
+        } catch (error) {
+          console.error("Could not save the FreshNest basket.", error);
+          toast("Your basket could not be saved in this browser.", true);
+        }
+      }
+      function persistLocation() {
+        try {
+          if (state.serviceable) localStorage.setItem(storageKeys.location, JSON.stringify({ pincode: state.pincode, slot: state.slot }));
+          else localStorage.removeItem(storageKeys.location);
+        } catch (error) {
+          console.error("Could not save your FreshNest delivery details.", error);
+          toast("Your delivery details could not be saved in this browser.", true);
+        }
+      }
+      function restoreState() {
+        try {
+          const cart = JSON.parse(localStorage.getItem(storageKeys.cart) || "[]");
+          if (Array.isArray(cart)) state.cart = cart.filter((item) =>
+            productById(item.productId) &&
+            Number.isInteger(item.cutIndex) &&
+            productById(item.productId).cutOptions[item.cutIndex] &&
+            Number.isInteger(item.quantity) && item.quantity > 0
+          );
+          const location = JSON.parse(localStorage.getItem(storageKeys.location) || "null");
+          if (location && deliveryAreas[location.pincode] && slots.some((slot) => slot.id === location.slot)) {
+            state.pincode = location.pincode;
+            state.slot = location.slot;
+            state.serviceable = true;
+          }
+        } catch (error) {
+          console.error("Could not restore FreshNest demo data.", error);
+          state.cart = [];
+          state.pincode = "";
+          state.serviceable = false;
+        }
+      }
       function renderProducts() {
         const query = state.search.trim().toLowerCase();
-        let visible = products.filter((product) => (state.category === "All" || product.category === state.category) && (!query || `${product.name} ${product.category} ${product.description}`.toLowerCase().includes(query)));
-        if (state.sort === "low") visible.sort((a, b) => a.pricePerKg - b.pricePerKg);
-        if (state.sort === "high") visible.sort((a, b) => b.pricePerKg - a.pricePerKg);
-        if (state.sort === "rating") visible.sort((a, b) => b.rating - a.rating);
+        let visible = products.filter((product) =>
+          (state.category === "All" || product.category === state.category) &&
+          (!query || `${product.name} ${product.category} ${product.tagline} ${product.ingredients} ${product.cutOptions.map((cut) => cut.label).join(" ")}`.toLowerCase().includes(query))
+        );
+        if (state.sort === "low") visible.sort((a, b) => a.basePrice - b.basePrice);
+        if (state.sort === "high") visible.sort((a, b) => b.basePrice - a.basePrice);
+        if (state.sort === "protein") visible.sort((a, b) => parseFloat(b.macros.protein) - parseFloat(a.macros.protein));
         if (state.sort === "featured") visible.sort((a, b) => a.featured - b.featured);
         byId("result-count").textContent = `${visible.length} fresh ${visible.length === 1 ? "pick" : "picks"}`;
         const grid = byId("product-grid");
         if (!visible.length) {
-          grid.innerHTML = '<div class="empty-products"><span aria-hidden="true">🌱</span><h3>No fresh picks found</h3><p>Try a different search or category.</p><button class="button button-secondary button-small" type="button" data-reset-filters>Clear filters</button></div>';
+          grid.innerHTML = '<div class="empty-products"><span aria-hidden="true">🌱</span><h3>No fresh picks found</h3><p>Try another search or category.</p><button class="button button-secondary button-small" type="button" data-reset-filters>Clear filters</button></div>';
           return;
         }
-        grid.innerHTML = visible.map((product, index) => `
-          <article class="product-card" style="--product-accent:${product.accent};animation-delay:${Math.min(index * 35, 280)}ms">
-            <button type="button" class="product-visual" data-product-detail="${product.id}" aria-label="View details for ${escapeHtml(product.name)}">
-              <span class="product-label">${product.category === "Ready To Cook" ? "Ready to cook" : escapeHtml(product.category)}</span>
-              <span class="food-emoji" aria-hidden="true">${product.emoji}</span>
-              <span class="freshness ${product.freshness >= 5 ? "is-aging" : ""}"><span class="freshness-clock" aria-hidden="true"></span>Cut ${product.freshness} hrs ago</span>
+        grid.innerHTML = visible.map((product, index) => {
+          const cutIndex = Number(document.querySelector(`[data-cut="${product.id}"]`)?.value || 0);
+          const price = currentPrice(product, cutIndex);
+          const quantity = cartQuantity(product.id, cutIndex);
+          return `<article class="product-card" style="animation-delay:${Math.min(index * 35, 280)}ms">
+            <button type="button" class="product-visual is-loading" data-product-detail="${product.id}" aria-label="View details for ${escapeHtml(product.name)}">
+              <img class="product-photo" src="${product.images[0]}" alt="${escapeHtml(product.name)} raw cut" loading="lazy" onload="this.closest('.product-visual').classList.remove('is-loading')" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=960&q=80';this.alt='Fresh food serving suggestion';this.closest('.product-visual').classList.remove('is-loading')">
+              <span class="product-label">${escapeHtml(product.category)}</span>
+              <span class="freshness"><span class="freshness-clock" aria-hidden="true"></span>${escapeHtml(product.freshness.clockText)}</span>
             </button>
             <div class="product-body">
-              <div class="product-kicker"><span>${escapeHtml(product.category)}</span><span class="rating" aria-label="Rated ${product.rating} out of 5">★ ${product.rating} <span>(fresh pick)</span></span></div>
-              <h3 class="product-title">${escapeHtml(product.name)}</h3>
-              <p class="product-desc">${escapeHtml(product.description)}</p>
-              <label class="sr-only" for="weight-${product.id}">Choose weight for ${escapeHtml(product.name)}</label>
-              <select class="select-field cut-select" data-weight="${product.id}" id="weight-${product.id}">
-                ${[.5, 1, 2].map((weight) => `<option value="${weight}">${weight === .5 ? "500 g" : `${weight} kg`}</option>`).join("")}
-              </select>
-              <label class="sr-only" for="cut-${product.id}">Choose cut style for ${escapeHtml(product.name)}</label>
-              <select class="select-field cut-select" data-cut="${product.id}" id="cut-${product.id}">
-                ${product.cutStyles.map((cut) => `<option value="${escapeHtml(cut)}">${escapeHtml(cut)}</option>`).join("")}
-              </select>
-              <div class="product-bottom">
-                <div><span class="price-per">Price per kg</span><span class="price" data-product-price="${product.id}">${rupees(product.pricePerKg * .5)} <small>/ 500 g</small></span><span class="price-old">${rupees(product.oldPricePerKg * .5)} · Save ${rupees((product.oldPricePerKg - product.pricePerKg) * .5)}</span></div>
-                <button class="add-button" type="button" data-add="${product.id}" aria-label="Add ${escapeHtml(product.name)} to basket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
-              </div>
-            </div>
-          </article>`).join("");
+              <div class="product-kicker"><span>${escapeHtml(product.category)}</span><span class="rating">★ ${product.rating.toFixed(1)}</span></div>
+              <h3 class="product-title" tabindex="0" role="button" data-product-detail="${product.id}">${escapeHtml(product.name)}</h3>
+              <p class="product-desc">${escapeHtml(product.tagline)}</p>
+              <div class="product-facts"><span>${escapeHtml(product.weights.net)} net</span><span>${escapeHtml(product.weights.pieces)}</span><span>Serves ${escapeHtml(product.weights.serves)}</span><span class="macro-pill">Protein ${escapeHtml(product.macros.protein)}/100g</span></div>
+              <label class="sr-only" for="cut-${product.id}">Cut to your choice for ${escapeHtml(product.name)}</label>
+              <select class="select-field cut-select" data-cut="${product.id}" id="cut-${product.id}">${product.cutOptions.map((cut, optionIndex) => `<option value="${optionIndex}" ${optionIndex === cutIndex ? "selected" : ""}>${escapeHtml(cut.label)}${cut.priceMod ? ` (+${rupees(cut.priceMod)})` : ""}</option>`).join("")}</select>
+              <div class="product-bottom"><div><span class="price-per">${escapeHtml(product.weights.net)} pack</span><span class="price" data-product-price="${product.id}">${rupees(price)}</span><span class="price-old">${rupees(product.mrp)} · Save ${rupees(product.mrp - price)}</span></div>
+              <div class="product-actions">${quantity ? `<div class="card-stepper" aria-label="${escapeHtml(product.name)} quantity"><button type="button" data-card-quantity="${product.id}" data-cut-index="${cutIndex}" data-delta="-1" aria-label="Remove one">−</button><output>${quantity}</output><button type="button" data-card-quantity="${product.id}" data-cut-index="${cutIndex}" data-delta="1" aria-label="Add one">+</button></div>` : `<button class="add-button card-add" type="button" data-add="${product.id}" data-cut-index="${cutIndex}" aria-label="Add ${escapeHtml(product.name)} to basket">+ Add</button>`}</div></div>
+            </div></article>`;
+        }).join("");
       }
       function renderSummary() {
         const count = countItems();
         const prices = priceSummary();
         byId("cart-count").textContent = count;
-        byId("open-cart").setAttribute("aria-label", `Open cart, ${count} ${count === 1 ? "item" : "items"}`);
+        byId("header-cart-summary").textContent = `${count} ${count === 1 ? "item" : "items"} · ${rupees(prices.total)}`;
+        byId("open-cart").setAttribute("aria-label", `Open basket, ${count} ${count === 1 ? "item" : "items"} · ${rupees(prices.total)}`);
         byId("aside-items").textContent = `${count} ${count === 1 ? "item" : "items"}`;
         byId("aside-subtotal").textContent = rupees(prices.sub);
+        byId("aside-packaging").textContent = prices.packaging ? rupees(prices.packaging) : "FREE";
+        byId("aside-delivery").textContent = prices.delivery ? rupees(prices.delivery) : "FREE";
+        byId("aside-savings").textContent = rupees(prices.savings);
         byId("aside-total").textContent = rupees(prices.total);
-        byId("aside-note").textContent = prices.sub >= 499 || state.coupon?.type === "delivery" ? "Lovely, delivery is on us." : `Add ${rupees(499 - prices.sub)} of fresh picks for free delivery.`;
+        byId("aside-progress-copy").textContent = prices.freeDelivery ? "🎉 You unlocked FREE chilled delivery!" : `Add ${rupees(499 - prices.sub)} of fresh picks for free delivery`;
+        byId("aside-progress-fill").style.width = `${Math.min(prices.sub / 499 * 100, 100)}%`;
+        byId("aside-note").textContent = `Eco-chilled packaging ${prices.packaging ? rupees(prices.packaging) : "FREE"} · Delivery ${prices.delivery ? rupees(prices.delivery) : "FREE"}.`;
         byId("mobile-cart-summary").textContent = `${count} ${count === 1 ? "item" : "items"} · ${rupees(prices.total)}`;
         byId("mobile-cart-bar").classList.toggle("is-visible", count > 0);
+        persistCart();
+        renderProducts();
         if (state.activeOverlay === "cart-overlay") renderCart();
       }
       function toast(message, error = false) {
@@ -933,6 +1061,7 @@
       function closeOverlay(id = state.activeOverlay, restore = true) {
         if (!id) return;
         byId(id)?.classList.remove("is-open");
+        if (id === "tracking-overlay" && state.autoplay) toggleAutoplay(false);
         if (state.activeOverlay === id) {
           state.activeOverlay = null;
           document.body.style.overflow = "";
@@ -943,113 +1072,101 @@
         const content = byId("cart-content");
         const footer = byId("cart-footer");
         if (!state.cart.length) {
-          content.innerHTML = '<div class="cart-empty"><svg viewBox="0 0 150 110" fill="none" aria-hidden="true"><path d="M22 68c14-31 92-31 106 0M32 78c13-21 73-21 86 0M46 88c13-10 45-10 58 0" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M75 41c-4-16 5-25 18-26 2 15-5 24-18 26Z" fill="#8FB68B"/><circle cx="75" cy="64" r="13" fill="#E3A63B"/></svg><h3>Your nest is empty.</h3><p>Let’s fill it with something fresh.</p><button type="button" class="button button-primary" data-close="cart-overlay" data-shop>Shop fresh</button></div>';
-          footer.innerHTML = '<span class="demo-payment">Prices and delivery shown here are for demo purposes.</span>';
+          content.innerHTML = '<div class="cart-empty"><svg viewBox="0 0 150 110" fill="none" aria-hidden="true"><path d="M22 68c14-31 92-31 106 0M32 78c13-21 73-21 86 0M46 88c13-10 45-10 58 0" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M75 41c-4-16 5-25 18-26 2 15-5 24-18 26Z" fill="#8FB68B"/><circle cx="75" cy="64" r="13" fill="#E3A63B"/></svg><h3>Your basket is empty.</h3><p>Let’s fill it with something fresh.</p><button type="button" class="button button-primary" data-close="cart-overlay" data-shop>Shop fresh</button></div>';
+          footer.innerHTML = '<span class="demo-payment">Demo only. No payment is collected.</span>';
           return;
         }
-        content.innerHTML = `${state.cart.map((item, index) => `
-          <article class="cart-item">
-            <div class="cart-item-art" aria-hidden="true">${item.product.emoji}</div>
-            <div><h3>${escapeHtml(item.product.name)}</h3><p>${item.weight === .5 ? "500 g" : `${item.weight} kg`} · ${escapeHtml(item.cut)}</p>
-              <div class="quantity-control" aria-label="Quantity for ${escapeHtml(item.product.name)}"><button type="button" data-quantity="${index}" data-delta="-1" aria-label="Decrease quantity">−</button><output>${item.quantity}</output><button type="button" data-quantity="${index}" data-delta="1" aria-label="Increase quantity">+</button></div>
-            </div>
-            <div><div class="cart-item-price">${rupees(item.product.pricePerKg * item.weight * item.quantity)}</div><button class="remove-button" type="button" data-remove="${index}">Remove</button></div>
-          </article>`).join("")}
-          <div class="mood-bar" aria-label="Free delivery progress">
-            <div class="mood-copy"><span>${subtotal() >= 499 ? "Delivery is on us!" : `Add ${rupees(499 - subtotal())} for free delivery`}</span><span aria-hidden="true">${subtotal() >= 499 ? "🥚🥚🥚" : "🥚"}</span></div>
-            <div class="progress-track"><div class="progress-fill" style="width:${Math.min(subtotal() / 499 * 100, 100)}%"></div></div>
-            <div class="mood-eggs" aria-hidden="true"><span>${subtotal() >= 166 ? "🥚" : "○"}</span><span>${subtotal() >= 333 ? "🥚" : "○"}</span><span>${subtotal() >= 499 ? "🥚" : "○"}</span></div>
-          </div>
-          <form class="coupon-form" id="coupon-form"><label class="sr-only" for="coupon-code">Coupon code</label><input class="field" id="coupon-code" value="${escapeHtml(state.couponCode)}" placeholder="Coupon code"><button class="button button-secondary button-small" type="submit">${state.coupon ? "Applied" : "Apply"}</button></form>
-          <p class="coupon-message ${state.couponMessageTone === "success" ? "is-success" : state.couponMessageTone === "error" ? "is-error" : ""}" id="coupon-message" aria-live="polite">${escapeHtml(state.couponMessage || "Try FRESH10, FIRST50 or FREEDEL")}</p>
-          <div class="slot-section"><h3>Choose a delivery slot</h3><div class="slot-ribbon" role="group" aria-label="Delivery slots">${slots.map((slot) => `<button class="slot-option ${slot.express ? "is-express" : ""}" type="button" data-slot="${slot.id}" aria-pressed="${state.slot === slot.id}" ${slot.capacity === 0 ? "disabled" : ""}><strong>${slot.label}</strong><span>${slot.detail}</span><span class="capacity-dots" aria-label="${slot.capacity === 0 ? "Fully booked" : `${slot.capacity} slots available`}">${slot.capacity === 0 ? "Fully booked" : "● ".repeat(Math.min(slot.capacity, 4))}</span></button>`).join("")}</div></div>`;
         const prices = priceSummary();
+        content.innerHTML = `${state.cart.map((item, index) => {
+          const product = productById(item.productId);
+          const cut = product.cutOptions[item.cutIndex];
+          return `<article class="cart-item">
+            <div class="cart-item-art" aria-hidden="true"><img src="${product.images[1]}" alt="" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=320&q=75'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+            <div><h3>${escapeHtml(product.name)}</h3>
+              <label class="sr-only" for="basket-cut-${index}">Cut preference for ${escapeHtml(product.name)}</label>
+              <select class="select-field cut-select" data-basket-cut="${index}" id="basket-cut-${index}">${product.cutOptions.map((option, optionIndex) => `<option value="${optionIndex}" ${optionIndex === item.cutIndex ? "selected" : ""}>${escapeHtml(option.label)}</option>`).join("")}</select>
+              <div class="quantity-control" aria-label="Quantity for ${escapeHtml(product.name)}"><button type="button" data-quantity="${index}" data-delta="-1" aria-label="Decrease quantity">−</button><output>${item.quantity}</output><button type="button" data-quantity="${index}" data-delta="1" aria-label="Increase quantity">+</button></div>
+            </div>
+            <div><div class="cart-item-price">${rupees(cartItemPrice(item))}</div><button class="remove-button" type="button" data-remove="${index}">Remove</button></div>
+          </article>`;
+        }).join("")}
+        <div class="mood-bar" aria-label="Free delivery progress">
+          <div class="mood-copy"><span>${prices.freeDelivery ? "🎉 You unlocked FREE chilled delivery!" : `Add ${rupees(499 - prices.sub)} of fresh picks for free delivery`}</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:${Math.min(prices.sub / 499 * 100, 100)}%"></div></div>
+        </div>
+        <p class="summary-savings">You save ${rupees(prices.savings)} vs. MRP</p>
+        <button class="clear-cart" type="button" data-clear-cart>Clear basket</button>
+        <div class="slot-section"><h3>Delivery ${state.serviceable ? `to ${escapeHtml(state.pincode)}` : "slot"}</h3>
+          ${state.serviceable ? `<p>${escapeHtml(deliveryAreas[state.pincode].area)}, ${escapeHtml(deliveryAreas[state.pincode].city)} · ${escapeHtml(deliveryAreas[state.pincode].hub)}</p>` : '<p>Choose a delivery area to place a demo order.</p>'}
+          <div class="slot-ribbon" role="group" aria-label="Delivery slots">${slots.map((slot) => `<button class="slot-option ${slot.express ? "is-express" : ""}" type="button" data-slot="${slot.id}" aria-pressed="${state.slot === slot.id}"><strong>${escapeHtml(slot.label)}</strong><span>${escapeHtml(slot.express ? `Express ${deliveryAreas[state.pincode]?.eta || 45}-Min Delivery` : slot.detail)}</span></button>`).join("")}</div></div>`;
         footer.innerHTML = `<div class="price-breakdown">
-          <div class="price-line"><span>Subtotal</span><strong>${rupees(prices.sub)}</strong></div>
-          ${prices.discount ? `<div class="price-line"><span>Coupon discount</span><strong>−${rupees(prices.discount)}</strong></div>` : ""}
-          <div class="price-line"><span>Tax (5%)</span><strong>${rupees(prices.tax)}</strong></div>
-          <div class="price-line"><span>Delivery</span><strong>${prices.delivery ? rupees(prices.delivery) : "Free"}</strong></div>
-          <div class="price-line"><span>Basket fee</span><strong>${rupees(prices.fee)}</strong></div>
-          <div class="price-line total"><span>Estimated total</span><strong>${rupees(prices.total)}</strong></div>
-        </div><button class="button button-primary" id="place-order" type="button" style="width:100%" ${!state.serviceable ? "disabled" : ""}>Place demo order · ${rupees(prices.total)}</button><span class="demo-payment">Demo only. No payment is collected. ${state.serviceable ? "" : "Check a serviceable pincode to continue."}</span>`;
-      }
-      function applyCoupon(code) {
-        const normalized = code.trim().toUpperCase();
-        const fail = (text) => {
-          state.coupon = null;
-          state.couponCode = normalized;
-          state.couponMessage = text;
-          state.couponMessageTone = "error";
-          renderSummary();
-        };
-        if (normalized === "FRESH10") {
-          if (subtotal() < 299) return fail("FRESH10 needs a basket subtotal of ₹299.");
-          state.coupon = { code: normalized, type: "percent" };
-        } else if (normalized === "FIRST50") {
-          if (subtotal() < 199) return fail("FIRST50 needs a basket subtotal of ₹199.");
-          state.coupon = { code: normalized, type: "fixed" };
-        } else if (normalized === "FREEDEL") {
-          state.coupon = { code: normalized, type: "delivery" };
-        } else {
-          return fail("That demo coupon wasn't recognised.");
-        }
-        state.couponCode = normalized;
-        state.couponMessage = `${normalized} applied to this demo basket.`;
-        state.couponMessageTone = "success";
-        renderSummary();
-        toast(`${normalized} applied`);
-      }
-      function revalidateCoupon() {
-        if (!state.coupon) return;
-        const minimum = state.coupon.type === "percent" ? 299 : state.coupon.type === "fixed" ? 199 : 0;
-        if (subtotal() < minimum) {
-          const code = state.coupon.code;
-          state.coupon = null;
-          state.couponMessage = `${code} removed because the basket is below its minimum spend.`;
-          state.couponMessageTone = "error";
-        }
+          <div class="price-line"><span>Item subtotal</span><strong>${rupees(prices.sub)}</strong></div>
+          <div class="price-line"><span>Eco-chilled ice-gel packaging</span><strong>${prices.packaging ? rupees(prices.packaging) : "FREE"}</strong></div>
+          <div class="price-line"><span>Cold-chain delivery</span><strong>${prices.delivery ? rupees(prices.delivery) : "FREE"}</strong></div>
+          <div class="price-line"><span>Total savings</span><strong>−${rupees(prices.savings)}</strong></div>
+          <div class="price-line total"><span>Grand estimated total</span><strong>${rupees(prices.total)}</strong></div>
+        </div><button class="button button-primary" id="place-order" type="button" style="width:100%">Place Demo Order &amp; Track Journey →</button><span class="demo-payment">Demo only. No payment is collected.</span>`;
       }
       function addToCart(productId, button) {
         const product = productById(productId);
-        const weight = Number(document.querySelector(`[data-weight="${productId}"]`)?.value || .5);
-        const cut = document.querySelector(`[data-cut="${productId}"]`)?.value || product.cutStyles[0];
-        const existing = state.cart.find((item) => item.product.id === product.id && item.weight === weight && item.cut === cut);
+        const cutIndex = Number(button?.dataset.cutIndex ?? document.querySelector(`[data-cut="${productId}"]`)?.value ?? 0);
+        const existing = state.cart.find((item) => item.productId === product.id && item.cutIndex === cutIndex);
         if (existing) existing.quantity += 1;
-        else state.cart.push({ product, weight, cut, quantity: 1 });
+        else state.cart.push({ productId: product.id, cutIndex, quantity: 1 });
         renderSummary();
         toast(`${product.name} added to your basket`);
         if (button && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           button.animate([{ transform: "scale(1)" }, { transform: "scale(1.16)" }, { transform: "scale(1)" }], { duration: 260, easing: "ease-out" });
         }
       }
-      function updateProductPrice(productId) {
+      function updateProductPrice(productId, cutIndex) {
         const product = productById(productId);
-        const weight = Number(document.querySelector(`[data-weight="${productId}"]`)?.value || .5);
-        const price = byId(`weight-${productId}`)?.closest(".product-body")?.querySelector(`[data-product-price="${productId}"]`);
-        if (price) price.innerHTML = `${rupees(product.pricePerKg * weight)} <small>/ ${weight === .5 ? "500 g" : `${weight} kg`}</small>`;
+        const price = document.querySelector(`[data-product-price="${productId}"]`);
+        const amount = currentPrice(product, Number(cutIndex));
+        if (price) price.innerHTML = `${rupees(amount)}<small> · Save ${rupees(product.mrp - amount)}</small>`;
+        const card = price?.closest(".product-card");
+        const addButton = card?.querySelector("[data-add]");
+        if (addButton) addButton.dataset.cutIndex = String(cutIndex);
+        renderProducts();
       }
-      function updatePincode(value) {
+      function nearestDemoPincode(pin) {
+        const prefix = Number(pin.slice(0, 2));
+        if (prefix >= 40 && prefix <= 44) return "400001";
+        if (prefix >= 56 && prefix <= 59) return "560001";
+        if (prefix >= 60 && prefix <= 66) return "600001";
+        if (prefix >= 70 && prefix <= 74) return "700001";
+        return "110001";
+      }
+      function updatePincode(value, notify = true) {
         const pin = value.trim();
         const message = byId("pincode-message");
-        state.pincode = pin;
-        state.serviceable = false;
-        byId("notify-form").classList.remove("is-visible");
         message.className = "field-hint";
         if (!/^\d{6}$/.test(pin)) {
           message.textContent = "Please enter a valid 6-digit pincode.";
           message.classList.add("is-error");
           return false;
         }
-        if (pincodeList.includes(pin)) {
+        const area = deliveryAreas[pin];
+        if (area) {
+          state.pincode = pin;
           state.serviceable = true;
-          message.textContent = `Good news, we deliver to ${pin} in this demo.`;
+          byId("notify-form").classList.remove("is-visible");
+          byId("delivery-card").classList.add("is-visible");
+          byId("delivery-card").innerHTML = `<h3>${escapeHtml(area.area)}, ${escapeHtml(area.city)}</h3><p><strong>Cold-chain hub:</strong> ${escapeHtml(area.hub)}</p><p><strong>Express:</strong> ${area.eta} mins · Van temperature 2.4°C</p><label class="sr-only" for="delivery-slot">Choose a delivery slot</label><select class="select-field delivery-slot" id="delivery-slot" aria-label="Choose a delivery slot">${slots.map((slot) => `<option value="${slot.id}" ${state.slot === slot.id ? "selected" : ""}>${escapeHtml(slot.id === "express" ? `Express ${area.eta}-Min Delivery` : `${slot.label} ${slot.detail}`)}</option>`).join("")}</select>`;
+          message.textContent = `FreshNest delivers to ${area.area}, ${area.city}.`;
           message.classList.add("is-success");
-          byId("pin-label").textContent = `Delivering to ${pin}`;
-          byId("pin-subtitle").textContent = "Demo service available";
-          toast(`FreshNest demo delivery is available in ${pin}`);
-          if (state.activeOverlay === "pincode-overlay") window.setTimeout(() => closeOverlay("pincode-overlay"), 850);
+          byId("pin-label").textContent = area.area;
+          byId("pin-subtitle").textContent = `${area.city} · ${pin}`;
+          persistLocation();
+          if (notify) toast(`Delivery verified for ${area.area}, ${area.city}`);
         } else {
-          message.textContent = `We're not delivering to ${pin} in this demo yet.`;
+          state.pincode = "";
+          state.serviceable = false;
+          byId("delivery-card").classList.remove("is-visible");
+          persistLocation();
+          const nearestPin = nearestDemoPincode(pin);
+          const nearestArea = deliveryAreas[nearestPin];
+          message.innerHTML = `We haven't reached ${pin} yet. Try the nearest demo area: <button type="button" class="pin-chip" data-pincode="${nearestPin}">${escapeHtml(nearestArea.city)} ${nearestPin}</button>`;
           message.classList.add("is-error");
           byId("notify-form").classList.add("is-visible");
           byId("pin-label").textContent = "Location not available";
@@ -1061,42 +1178,76 @@
       function renderProductDetail(id) {
         const product = productById(id);
         state.activeDetailId = product.id;
+        state.detailImage = 0;
+        const selectedCut = Number(document.querySelector(`[data-cut="${product.id}"]`)?.value || 0);
+        const amount = currentPrice(product, selectedCut);
         byId("product-detail-content").innerHTML = `
-          <div class="product-detail-visual" style="color:${product.accent}" aria-hidden="true">${product.emoji}</div>
-          <p class="eyebrow" style="color:var(--terracotta)">${escapeHtml(product.category)} · Cut ${product.freshness} hrs ago</p>
+          <div class="detail-gallery"><img class="detail-gallery-main" id="detail-main-image" src="${product.images[0]}" alt="${escapeHtml(product.name)} — raw cut" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=960&q=80'"><div class="detail-thumbnails" role="group" aria-label="Product photos">${product.images.map((image, index) => `<button type="button" class="detail-thumbnail" data-gallery-image="${index}" aria-pressed="${index === 0}"><img src="${image}" alt="${["Raw cut", "Packaged fresh", "Serving suggestion"][index]}" loading="lazy"></button>`).join("")}</div></div>
+          <p class="eyebrow" style="color:var(--terracotta)">${escapeHtml(product.category)} · ${escapeHtml(product.freshness.clockText)}</p>
           <h2 id="product-detail-title" style="font-size:30px;margin:0 0 8px">${escapeHtml(product.name)}</h2>
-          <p>${escapeHtml(product.description)} Sourced and handled with care.</p>
+          <p>${escapeHtml(product.tagline)} Thoughtfully sourced and carefully packed.</p>
           <div class="detail-meta"><span>★ ${product.rating} customer rating</span><span>Freshness checked</span></div>
-          <h3 style="font:750 13px var(--font-body);margin:18px 0 8px">Cold-chain journey</h3>
-          ${renderColdChain(1)}
-          <div class="tabs" role="tablist" aria-label="Product information">
-            <button class="tab-button" role="tab" type="button" id="tab-cook" aria-selected="true" aria-controls="panel-cook" data-tab="cook">Cook it</button>
-            <button class="tab-button" role="tab" type="button" id="tab-store" aria-selected="false" aria-controls="panel-store" data-tab="store" tabindex="-1">Store it</button>
-            <button class="tab-button" role="tab" type="button" id="tab-know" aria-selected="false" aria-controls="panel-know" data-tab="know" tabindex="-1">Know it</button>
-          </div>
-          <div class="tab-panel" role="tabpanel" id="panel-cook" aria-labelledby="tab-cook"><h3>Cook it · about 35 minutes</h3><ol><li>Season with salt and your favourite spices.</li><li>Cook gently until tender and piping hot.</li><li>Rest briefly, then serve with something bright.</li></ol></div>
-          <div class="detail-buy"><span><strong>${rupees(product.pricePerKg)}</strong><small style="color:var(--ink-soft)"> / kg</small></span><button class="button button-primary" type="button" data-detail-add="${product.id}">Add 500 g · ${rupees(product.pricePerKg * .5)}</button></div>`;
+          <section class="info-card"><h3>Pack details</h3><div class="info-grid"><div><span>Net weight</span><strong>${escapeHtml(product.weights.net)}</strong></div><div><span>Gross weight</span><strong>${escapeHtml(product.weights.gross)}</strong></div><div><span>Pieces</span><strong>${escapeHtml(product.weights.pieces)}</strong></div><div><span>Serves</span><strong>${escapeHtml(product.weights.serves)}</strong></div></div></section>
+          <section class="info-card"><h3>Cold-chain &amp; traceability</h3><div class="info-grid"><div><span>Batch ID</span><strong>${escapeHtml(product.freshness.batchId)}</strong></div><div><span>Storage temperature</span><strong>${escapeHtml(product.freshness.temp)}</strong></div><div><span>Sourced origin</span><strong>${escapeHtml(product.freshness.sourcedFrom)}</strong></div><div><span>Shelf life</span><strong>${escapeHtml(product.freshness.shelfLife)}</strong></div></div></section>
+          <section class="info-card"><h3>Nutrition per 100g</h3><div class="macro-grid"><span class="macro-pill">Protein ${escapeHtml(product.macros.protein)}</span><span class="macro-pill">Fat ${escapeHtml(product.macros.fat)}</span><span class="macro-pill">${escapeHtml(product.macros.calories)}</span></div></section>
+          <section class="info-card"><h3>Chef's cooking guide</h3><div class="info-grid"><div><span>Prep time</span><strong>${escapeHtml(product.cookingGuide.prepTime)}</strong></div><div><span>Cook time</span><strong>${escapeHtml(product.cookingGuide.cookTime)}</strong></div><div><span>Method</span><strong class="macro-pill">${escapeHtml(product.cookingGuide.method)}</strong></div></div><ol class="cooking-steps">${product.cookingGuide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><p style="margin:9px 0 0;font-size:11px"><strong>Chef tip:</strong> ${escapeHtml(product.cookingGuide.chefTip)}</p></section>
+          <label for="detail-cut" style="font-size:12px;font-weight:750">Cut to your choice</label><select class="select-field detail-cut" id="detail-cut" data-detail-cut>${product.cutOptions.map((cut, index) => `<option value="${index}" ${index === selectedCut ? "selected" : ""}>${escapeHtml(cut.label)}${cut.priceMod ? ` (+${rupees(cut.priceMod)})` : ""}</option>`).join("")}</select>
+          <div class="detail-buy"><span><span class="detail-price" id="detail-price">${rupees(amount)}</span><small style="color:var(--ink-soft)"> · ${escapeHtml(product.weights.net)}</small></span><button class="button button-primary" type="button" data-detail-add="${product.id}">Add to basket</button></div>`;
         openOverlay("product-overlay");
-      }
-      function renderColdChain(current) {
-        const stages = ["Farm", "Quality check", "Cutting", "Cold storage", "Packing", "Doorstep"];
-        const icons = ["⌂", "✓", "✂", "❄", "▣", "⌖"];
-        return `<div class="cold-chain" aria-label="Cold-chain journey">${stages.map((stage, index) => `<div class="chain-step ${index < current ? "is-done" : ""} ${index === current ? "is-current" : ""}"><span class="chain-icon" aria-hidden="true">${icons[index]}</span><span>${stage}</span></div>`).join("")}</div>`;
       }
       function renderTracking() {
         const order = state.order;
         if (!order) return;
-        const isDelivered = order.statusIndex === orderStatuses.length - 1;
-        const timeline = orderStatuses.map((status, index) => `<li class="${index < order.statusIndex ? "is-done" : ""} ${index === order.statusIndex ? "is-current" : ""}"><span class="timeline-dot" aria-hidden="true">${index < order.statusIndex ? "✓" : index + 1}</span><span class="timeline-copy"><strong>${statusLabels[index]}</strong><span>${index <= order.statusIndex ? statusTimes[index] : "Coming up"}</span></span></li>`).join("");
-        const packedReady = order.statusIndex >= 3;
-        const orderedGrams = order.weight * 1000;
-        const packedGrams = orderedGrams + 20;
-        const difference = (packedGrams - orderedGrams) / 1000 * (order.product?.pricePerKg || 399);
-        byId("tracking-content").innerHTML = `<p class="eyebrow" style="color:var(--terracotta)">Order ${escapeHtml(order.number)}</p><h3 style="margin:0 0 5px;font:700 19px var(--font-display)">${isDelivered ? "Freshness is at your door" : "A fresh order is on its way"}</h3><p style="font-size:12px">${isDelivered ? "Thanks for choosing FreshNest." : `Estimated arrival in ${Math.max(0, 45 - order.statusIndex * 8)} minutes · Demo countdown`}</p>
-          ${renderColdChain(Math.min(order.statusIndex + 1, 5))}
-          <ol class="timeline" aria-label="Order status">${timeline}</ol>
-          ${packedReady ? `<section class="weight-card"><h3>Packed to the gram</h3><div class="weight-caption"><span>You ordered ${orderedGrams} g</span><span>We packed ${packedGrams} g</span></div><div class="weight-bars"><div class="weight-bar-row"><span>Ordered</span><div class="weight-track"><div class="weight-fill" style="width:96%"></div></div><strong>500 g</strong></div><div class="weight-bar-row"><span>Packed</span><div class="weight-track"><div class="weight-fill packed" style="width:100%"></div></div><strong>520 g</strong></div></div><p class="weight-adjustment">The extra 20 g is ${rupees(difference)}; in a real order, the final amount would be reconciled transparently.</p></section>` : ""}
-          <div class="tracking-actions">${!isDelivered ? '<button class="button button-primary" id="next-status" type="button">Next status (demo) →</button>' : '<button class="button button-secondary" id="reorder" type="button">Reorder</button><button class="button button-secondary" id="rate-order" type="button">Rate your order</button>'}</div>`;
+        const timeline = orderStatuses.map((status, index) => {
+          const reached = index <= order.statusIndex;
+          const time = order.stageTimes[index] ? new Date(order.stageTimes[index]).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Coming up";
+          return `<li class="${index < order.statusIndex ? "is-done" : ""} ${index === order.statusIndex ? "is-current" : ""}"><span class="timeline-dot" aria-hidden="true">${index < order.statusIndex ? "✓" : index + 1}</span><span class="timeline-copy"><strong>${status}</strong><span>${reached ? `${statusDescriptions[index]} ${time}` : "Coming up"}</span></span></li>`;
+        }).join("");
+        const area = deliveryAreas[order.pincode];
+        const itemSummary = order.items.length ? order.items.map((item) => {
+          const product = productById(item.productId);
+          return `<li>${item.quantity} × ${escapeHtml(product.name)} · ${escapeHtml(product.cutLabel)}</li>`;
+        }).join("") : "<li>Demo journey preview</li>";
+        byId("tracking-content").innerHTML = `<p class="eyebrow" style="color:var(--terracotta)">Order #${escapeHtml(order.number)}</p>
+          <h3 style="margin:0 0 5px;font:700 19px var(--font-display)">${order.statusIndex === 4 ? "Delivered fresh" : "Your fresh order is on its way"}</h3>
+          <p style="font-size:12px">Placed ${new Date(order.created).toLocaleString()} · ${area ? `${escapeHtml(area.area)}, ${escapeHtml(area.city)}` : "Demo location not selected"}</p>
+          <div class="journey-temp"><span>Delivery slot<br><strong>${escapeHtml(order.slot === "express" ? `Express ${area?.eta || 45}-Min Delivery` : slots.find((slot) => slot.id === order.slot)?.detail || "Delivery slot")}</strong></span><span>Chilled box<br><strong>2.1°C</strong></span></div>
+          ${area ? `<p style="margin-top:9px;font-size:12px">${escapeHtml(area.hub)} · ${area.eta}-min express estimate</p>` : ""}
+          <section class="info-card"><h3>Order summary</h3><ul class="cooking-steps">${itemSummary}</ul><p style="margin:8px 0 0;font-size:12px">Demo total: <strong>${rupees(order.total)}</strong></p></section>
+          <ol class="timeline" aria-label="Five-stage order journey">${timeline}</ol>
+          <div class="tracking-actions"><button class="button button-primary" id="next-status" type="button" ${order.statusIndex >= 4 ? "disabled" : ""}>Simulate Next Stage →</button><label class="slot-option" style="display:flex;align-items:center;gap:8px;min-height:46px"><input type="checkbox" data-autoplay ${state.autoplay ? "checked" : ""}> Auto-Play Live Demo (15s)</label></div>`;
+      }
+      function createOrder() {
+        return {
+          number: `FN-${Math.floor(10000 + Math.random() * 90000)}`,
+          statusIndex: 0,
+          stageTimes: [Date.now()],
+          items: state.cart.map((item) => ({ ...item, cutLabel: productById(item.productId).cutOptions[item.cutIndex].label })),
+          total: priceSummary().total,
+          pincode: state.pincode,
+          slot: state.slot,
+          created: Date.now()
+        };
+      }
+      function advanceOrder() {
+        if (!state.order || state.order.statusIndex >= 4) {
+          if (state.autoplay) toggleAutoplay(false);
+          return;
+        }
+        state.order.statusIndex += 1;
+        state.order.stageTimes[state.order.statusIndex] = Date.now();
+        renderTracking();
+        toast(statusDescriptions[state.order.statusIndex]);
+        if (state.order.statusIndex === 4 && state.autoplay) {
+          toggleAutoplay(false);
+          renderTracking();
+        }
+      }
+      function toggleAutoplay(enabled) {
+        state.autoplay = Boolean(enabled && state.order?.statusIndex < 4);
+        window.clearInterval(state.autoplayTimer);
+        state.autoplayTimer = null;
+        if (state.autoplay) state.autoplayTimer = window.setInterval(advanceOrder, 3750);
       }
       function placeOrder() {
         if (!state.serviceable) {
@@ -1106,11 +1257,8 @@
           return;
         }
         if (!state.cart.length) return;
-        const firstItem = state.cart[0];
-        state.order = { number: `FN-${Math.floor(100000 + Math.random() * 900000)}`, statusIndex: 0, product: firstItem.product, weight: firstItem.weight, cut: firstItem.cut, total: priceSummary().total, created: Date.now() };
+        state.order = createOrder();
         state.cart = [];
-        state.coupon = null;
-        state.couponCode = "";
         renderSummary();
         closeOverlay("cart-overlay", false);
         renderTracking();
@@ -1131,7 +1279,30 @@
           renderProducts();
         }
         if (target.matches("[data-add]")) addToCart(target.dataset.add, target);
+        if (target.matches("[data-card-quantity]")) {
+          const productId = target.dataset.cardQuantity;
+          const cutIndex = Number(target.dataset.cutIndex);
+          const item = state.cart.find((entry) => entry.productId === productId && entry.cutIndex === cutIndex);
+          if (item) {
+            item.quantity += Number(target.dataset.delta);
+            if (item.quantity <= 0) state.cart = state.cart.filter((entry) => entry !== item);
+            renderSummary();
+          }
+        }
         if (target.matches("[data-product-detail]")) renderProductDetail(target.dataset.productDetail);
+        if (target.matches("[data-gallery-image]")) {
+          state.detailImage = Number(target.dataset.galleryImage);
+          const image = products.find((product) => product.id === state.activeDetailId)?.images[state.detailImage];
+          if (image) {
+            byId("detail-main-image").src = image;
+            byId("detail-main-image").alt = `${productById(state.activeDetailId).name} — ${["Raw cut", "Packaged fresh", "Serving suggestion"][state.detailImage]}`;
+            document.querySelectorAll("[data-gallery-image]").forEach((button, index) => button.setAttribute("aria-pressed", String(index === state.detailImage)));
+          }
+        }
+        if (target.matches("[data-pincode]")) {
+          byId("pincode-input").value = target.dataset.pincode;
+          updatePincode(target.dataset.pincode);
+        }
         if (target.matches("[data-close]")) closeOverlay(target.dataset.close);
         if (target.matches("[data-close][data-shop]")) document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
         if (target.id === "open-cart" || target.id === "aside-open-cart" || target.id === "mobile-cart" || target.id === "mobile-open-cart") {
@@ -1141,64 +1312,52 @@
           byId("pincode-input").value = state.pincode;
           openOverlay("pincode-overlay", target);
         }
+        if (target.id === "open-tracking" || target.id === "mobile-tracking") {
+          if (!state.order) state.order = createOrder();
+          renderTracking();
+          openOverlay("tracking-overlay", target);
+        }
         if (target.id === "search-focus" || target.id === "mobile-search") {
           document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
           byId("product-search").focus({ preventScroll: true });
         }
         if (target.matches("[data-scroll]")) document.getElementById(target.dataset.scroll).scrollIntoView({ behavior: "smooth" });
-        if (target.id === "mobile-account") toast("Customer account arrives in a later phase.");
-        if (target.matches("[data-weight]")) updateProductPrice(target.dataset.weight);
         if (target.matches("[data-quantity]")) {
           const item = state.cart[Number(target.dataset.quantity)];
-          item.quantity = Math.max(1, item.quantity + Number(target.dataset.delta));
-          revalidateCoupon();
+          item.quantity += Number(target.dataset.delta);
+          if (item.quantity <= 0) state.cart.splice(Number(target.dataset.quantity), 1);
           renderSummary();
         }
         if (target.matches("[data-remove]")) {
           state.cart.splice(Number(target.dataset.remove), 1);
-          if (!state.cart.length) { state.coupon = null; state.couponCode = ""; state.couponMessage = ""; state.couponMessageTone = ""; }
-          else revalidateCoupon();
           renderSummary();
+        }
+        if (target.matches("[data-clear-cart]")) {
+          state.cart = [];
+          renderSummary();
+          toast("Basket cleared");
         }
         if (target.matches("[data-slot]")) {
           state.slot = target.dataset.slot;
+          persistLocation();
           renderCart();
         }
         if (target.matches("[data-detail-add]")) {
-          addToCart(target.dataset.detailAdd);
-          closeOverlay("product-overlay");
-          renderCart();
-          openOverlay("cart-overlay");
-        }
-        if (target.matches("[data-tab]")) {
-          const tab = target.dataset.tab;
-          document.querySelectorAll("[data-tab]").forEach((button) => {
-            const active = button.dataset.tab === tab;
-            button.setAttribute("aria-selected", String(active));
-            button.tabIndex = active ? 0 : -1;
-          });
-          const panel = byId("panel-cook");
-          const panels = {
-            cook: '<h3>Cook it · about 35 minutes</h3><ol><li>Season with salt and your favourite spices.</li><li>Cook gently until tender and piping hot.</li><li>Rest briefly, then serve with something bright.</li></ol>',
-            store: '<h3>Store it safely</h3><p>Keep chilled at or below 4°C. Use promptly after opening, or freeze in a sealed container. Thaw in the refrigerator, not on the counter.</p>',
-            know: '<h3>Know what is on your plate</h3><p>Protein-rich fresh food. Allergen and nutrition details in this prototype are illustrative; check product packaging in a live store.</p>'
-          };
-          panel.innerHTML = panels[tab];
-          panel.setAttribute("aria-labelledby", `tab-${tab}`);
+          target.dataset.cutIndex = String(Number(byId("detail-cut").value));
+          addToCart(target.dataset.detailAdd, target);
+          target.textContent = "Added to basket · Add another";
         }
         if (target.id === "place-order") placeOrder();
         if (target.id === "next-status" && state.order) {
-          state.order.statusIndex = Math.min(state.order.statusIndex + 1, orderStatuses.length - 1);
-          renderTracking();
+          advanceOrder();
         }
         if (target.id === "reorder" && state.order) {
-          state.cart.push({ product: state.order.product, weight: state.order.weight, cut: state.order.cut, quantity: 1 });
+          state.order.items.forEach((item) => state.cart.push({ productId: item.productId, cutIndex: item.cutIndex, quantity: item.quantity }));
           renderSummary();
           closeOverlay("tracking-overlay");
           renderCart();
           openOverlay("cart-overlay");
         }
-        if (target.id === "rate-order") toast("Thanks for being part of our demo.");
         if (target.matches("[data-reset-filters]")) {
           state.category = "All"; state.search = ""; byId("product-search").value = "";
           document.querySelectorAll("[data-category]").forEach((button) => {
@@ -1213,10 +1372,6 @@
         if (event.target.id === "pincode-form") {
           event.preventDefault();
           updatePincode(byId("pincode-input").value);
-        }
-        if (event.target.id === "coupon-form") {
-          event.preventDefault();
-          applyCoupon(byId("coupon-code").value);
         }
         if (event.target.id === "notify-form") {
           event.preventDefault();
@@ -1233,7 +1388,43 @@
       });
       document.addEventListener("change", (event) => {
         if (event.target.id === "product-sort") { state.sort = event.target.value; renderProducts(); }
-        if (event.target.matches("[data-weight]")) updateProductPrice(event.target.dataset.weight);
+        if (event.target.matches("[data-cut]")) {
+          updateProductPrice(event.target.dataset.cut, event.target.value);
+          toast("Cut preference updated");
+        }
+        if (event.target.matches("[data-basket-cut]")) {
+          const item = state.cart[Number(event.target.dataset.basketCut)];
+          item.cutIndex = Number(event.target.value);
+          const duplicate = state.cart.find((candidate) => candidate !== item && candidate.productId === item.productId && candidate.cutIndex === item.cutIndex);
+          if (duplicate) {
+            duplicate.quantity += item.quantity;
+            state.cart = state.cart.filter((candidate) => candidate !== item);
+          }
+          const cardCut = document.querySelector(`[data-cut="${item.productId}"]`);
+          if (cardCut) cardCut.value = String(Number(event.target.value));
+          renderSummary();
+          toast("Basket cut preference updated");
+        }
+        if (event.target.matches("[data-detail-cut]")) {
+          const product = productById(state.activeDetailId);
+          byId("detail-price").textContent = rupees(currentPrice(product, Number(event.target.value)));
+          const cardCut = document.querySelector(`[data-cut="${product.id}"]`);
+          if (cardCut) {
+            cardCut.value = event.target.value;
+            renderProducts();
+          }
+          toast("Cut preference updated");
+        }
+        if (event.target.id === "delivery-slot") {
+          state.slot = event.target.value;
+          persistLocation();
+          renderSummary();
+          toast("Delivery slot updated");
+        }
+        if (event.target.matches("[data-autoplay]")) {
+          toggleAutoplay(event.target.checked);
+          renderTracking();
+        }
       });
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && state.activeOverlay) closeOverlay();
@@ -1246,24 +1437,23 @@
           if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
           else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
         }
-        if ((event.key === "Enter" || event.key === " ") && event.target.matches(".product-visual")) {
+        if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-product-detail]")) {
           event.preventDefault(); renderProductDetail(event.target.dataset.productDetail);
-        }
-        if (["ArrowLeft", "ArrowRight"].includes(event.key) && event.target.matches("[role=tab]")) {
-          event.preventDefault();
-          const tabs = [...document.querySelectorAll("[role=tab]")];
-          const index = tabs.indexOf(event.target);
-          const next = tabs[(index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
-          next.focus(); next.click();
         }
       });
       document.querySelectorAll(".overlay").forEach((overlay) => overlay.addEventListener("mousedown", (event) => {
-        if (event.target === overlay && overlay.id !== "pincode-overlay") closeOverlay(overlay.id);
+        if (event.target === overlay) closeOverlay(overlay.id);
       }));
 
-      renderProducts();
-      renderSummary();
-      openOverlay("pincode-overlay", byId("open-pincode"));
+      restoreState();
+      if (state.serviceable) {
+        byId("pincode-input").value = state.pincode;
+        updatePincode(state.pincode, false);
+      } else {
+        renderProducts();
+        renderSummary();
+        openOverlay("pincode-overlay", byId("open-pincode"));
+      }
     })();
   </script>
 </body>
